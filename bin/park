@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+# -*- coding: UTF-8 -*-
+
+require 'park'
+
+include Park
+
+current
+
+init
+
+list
