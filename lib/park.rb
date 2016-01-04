@@ -1,14 +1,19 @@
 require 'yaml'
 
 module Park
+
   # return current git config
-  def current
-    system 'git config -l'
+  def current_config
+    system 'git config -l --global'
   end
 
   # init config file
-  def init
-    system 'touch ~/.park.yml'
+  def init_config
+    if !File.exist?(Dir.home + "/.park.yml")
+      system 'touch ~/.park.yml'
+    else
+      puts "config file already exists."
+    end
   end
 
   # git configs list

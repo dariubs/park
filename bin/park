@@ -1,12 +1,22 @@
 #!/usr/bin/env ruby
 # -*- coding: UTF-8 -*-
 
+require 'thor'
 require 'park'
 
-include Park
+class Commands < Thor
+  include Park
 
-current
+  desc "current", "Show current config"
+  def current
+    current_config
+  end
 
-init
+  desc "init", "List git accounts"
+  def init
+    init_config
+  end
 
-list
+end
+
+Commands.start(ARGV)
