@@ -12,9 +12,24 @@ class Commands < Thor
     current_config
   end
 
-  desc "init", "List git accounts"
+  desc "init", "init ~/.parkrc"
   def init
     init_config
+  end
+
+  desc "ls", "list accounts stored in ~/.park.yml"
+  def ls
+    list_accounts
+  end
+
+  desc "add", "add new account interactive"
+  def add
+    add_account
+  end
+
+  desc "switch USERNAME", "switch another account"
+  def switch(username)
+    switch_account(username)
   end
 
 end
