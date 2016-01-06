@@ -1,4 +1,5 @@
 require 'yaml'
+require 'git'
 
 module Park
 
@@ -11,7 +12,18 @@ module Park
   def init_config
     if !File.exist?(Dir.home + "/.park.yml")
       system 'touch ~/.park.yml'
-      put users.to_yml
+
+      g = Git.open(Dir.pwd)
+
+      users = {}
+      users[:default] = {
+        :name => g.config('user.name'),
+        :email => g.config('user.email')
+      }
+
+      File.open(Dir.home + '/.park.yml', 'w') do |f|
+        f.write(users.to_yaml)
+      end
     else
       puts "config file already exists."
     end
