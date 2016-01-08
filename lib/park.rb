@@ -33,7 +33,11 @@ module Park
   def list_accounts
     config_file = File.open Dir.home + "/.park.yml"
     config = YAML.load(config_file)
-    puts config
+    if config.is_a?(Hash) then
+      config.each_pair do |key, value|
+        puts key
+      end
+    end
     config_file.close
   end
 
