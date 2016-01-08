@@ -79,6 +79,19 @@ module Park
 
   end
 
+  def rm_account(username)
+    users_file = File.open Dir.home + "/.park.yml"
+    users = YAML.load(users_file)
+
+    users.delete(username)
+
+    File.open(Dir.home + '/.park.yml', 'w') do |f|
+      f.write(users.to_yaml)
+    end
+
+    puts "#{username} successfully removed."
+  end
+
   def switch_account(username=nil)
   end
 

@@ -27,6 +27,11 @@ class Commands < Thor
     add_account
   end
 
+  desc "rm USERNAME", "remove an account"
+  def rm(username)
+    rm_account(username)
+  end
+
   desc "switch USERNAME", "switch another account"
   def switch(username)
     switch_account(username)
