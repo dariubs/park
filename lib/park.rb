@@ -83,13 +83,17 @@ module Park
     users_file = File.open Dir.home + "/.park.yml"
     users = YAML.load(users_file)
 
-    users.delete(username)
+    if users[username] then
+      users.delete(username)
 
-    File.open(Dir.home + '/.park.yml', 'w') do |f|
-      f.write(users.to_yaml)
+      File.open(Dir.home + '/.park.yml', 'w') do |f|
+        f.write(users.to_yaml)
+      end
+
+      puts "#{username} successfully removed."
+    else
+      puts "#{username} not exists."
     end
-
-    puts "#{username} successfully removed."
   end
 
   def switch_account(username=nil)
