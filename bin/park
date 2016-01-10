@@ -8,6 +8,12 @@ class Commands < Thor
   include Park
 
   desc "current", "Show current config"
+  long_desc <<-LONGDESC
+    This command returns current git config details and
+    also current park active account information.
+
+    `park current`
+  LONGDESC
   def current
     current_config
   end
