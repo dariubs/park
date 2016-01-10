@@ -37,6 +37,15 @@ module Park
     end
   end
 
+  def inited
+    if !init_config? then
+      $stderr.puts 'park not initialized'
+      return false
+    else
+      return true
+    end
+  end
+
   # git configs list
   def list_accounts
     config_file = File.open Dir.home + "/.park.yml"
@@ -50,36 +59,35 @@ module Park
   end
 
   def add_account
-    if init_config?
+    return 0 if !inited
 
-      puts "Your name : "
-      name = STDIN.gets
+    puts "Your name : "
+    name = STDIN.gets
 
-      puts "Your email : "
-      email = STDIN.gets
+    puts "Your email : "
+    email = STDIN.gets
 
-      puts "Account name : "
-      username = STDIN.gets.chomp
+    puts "Account name : "
+    username = STDIN.gets.chomp
 
-      users_file = File.open Dir.home + "/.park.yml"
-      users = YAML.load(users_file)
+    users_file = File.open Dir.home + "/.park.yml"
+    users = YAML.load(users_file)
 
-      users[username] = {
-        :name => name,
-        :email => email
-      }
+    users[username] = {
+      :name => name,
+      :email => email
+    }
 
-      File.open(Dir.home + '/.park.yml', 'w') do |f|
-        f.write(users.to_yaml)
-      end
-
-    else
-      puts "first init pars : `pars init`"
+    File.open(Dir.home + '/.park.yml', 'w') do |f|
+      f.write(users.to_yaml)
     end
+
 
   end
 
   def rm_account(username)
+    return 0 if !inited
+
     users_file = File.open Dir.home + "/.park.yml"
     users = YAML.load(users_file)
 
