@@ -10,6 +10,4 @@ task :installgem do
 	sh("gem install park-" + Park::VERSION + ".gem")
 end
 
-task :default =>[:buildgem, :installgem] do
-
-end
+task :default =>[:buildgem, :installgem]
