@@ -48,6 +48,8 @@ module Park
 
   # git configs list
   def list_accounts
+    return 0 if !inited
+    
     config_file = File.open Dir.home + "/.park.yml"
     config = YAML.load(config_file)
     if config.is_a?(Hash) then
@@ -82,7 +84,6 @@ module Park
       f.write(users.to_yaml)
     end
 
-
   end
 
   def rm_account(username)
@@ -105,6 +106,8 @@ module Park
   end
 
   def switch_account(username=nil)
+    return 0 if !inited
+
   end
 
 end
