@@ -5,6 +5,7 @@ require 'park/version'
 require "bundler/setup"
 
 require 'rake/testtask'
+require 'rdoc/task'
 
 desc "Build local gem"
 task :buildgem do
@@ -19,6 +20,13 @@ end
 desc "Publish gem file"
 task :publishgem do
 	sh("gem push park" + + Park::VERSION + ".gem")
+end
+
+desc "Generate docs"
+Rake.RDocTask.new('rdoc') do |t|
+	t.rdoc_files.include('README', 'lib/**/*.rb')
+	t.main = 'README'
+	t.title = 'Park API Documentation'
 end
 
 desc "Test codes"
