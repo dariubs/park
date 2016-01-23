@@ -10,25 +10,30 @@ module Park
 
   # init config file
   def init_config
-    if !File.exist?(Dir.home + "/.park.yml")
-      system 'touch ~/.park.yml'
+    begin
+      if !File.exist?(Dir.home + "/.park.yml")
+        system 'touch ~/.park.yml'
 
-      g = Git.open(Dir.pwd)
+        g = Git.open(Dir.pwd)
 
-      users = {}
-      users['default'] = {
-        :name => g.config('user.name'),
-        :email => g.config('user.email')
-      }
+        users = {}
+        users['default'] = {
+          :name => g.config('user.name'),
+          :email => g.config('user.email')
+        }
 
-      File.open(Dir.home + '/.park.yml', 'w') do |f|
-        f.write(users.to_yaml)
+        File.open(Dir.home + '/.park.yml', 'w') do |f|
+          f.write(users.to_yaml)
+        end
+      else
+        puts "config file already exists."
       end
-    else
-      puts "config file already exists."
+    rescue
+      $stderr.puts "An error occured."
     end
   end
 
+  # Check if config inited
   def init_config?
     if File.exist?(Dir.home + "/.park.yml")
       return true
@@ -37,6 +42,7 @@ module Park
     end
   end
 
+  # Check if config inited
   def inited
     if !init_config? then
       $stderr.puts 'park not initialized'
@@ -49,7 +55,7 @@ module Park
   # git configs list
   def list_accounts
     return 0 if !inited
-    
+
     config_file = File.open Dir.home + "/.park.yml"
     config = YAML.load(config_file)
     if config.is_a?(Hash) then
@@ -60,8 +66,12 @@ module Park
     config_file.close
   end
 
+  # Add new git account to .park.yml
   def add_account
     return 0 if !inited
+
+    # Get data from user based on defined options
+    opts = ["name","email"]
 
     puts "Your name : "
     name = STDIN.gets
@@ -86,6 +96,7 @@ module Park
 
   end
 
+  # Remove an account information from .park.yml
   def rm_account(username)
     return 0 if !inited
 
@@ -105,8 +116,10 @@ module Park
     end
   end
 
+  # Switch active git account
   def switch_account(username=nil)
     return 0 if !inited
+
 
   end
 
