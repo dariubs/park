@@ -33,6 +33,19 @@ module Park
     end
   end
 
+  # init rc file
+  def init_rc
+    begin
+      if !File.exist?(Dir.home + "/.parkrc")
+        system 'touch ~/.parkrc'
+      else
+        puts ".parkrc file already exists."
+      end
+    rescue
+      $stderr.puts "An error occured."
+    end
+  end
+
   # Check if config inited
   def init_config?
     if File.exist?(Dir.home + "/.park.yml")
